@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\RecipieController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,8 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('account')->group(function () {
+    Route::get('check', [AccountController::class, 'check']);
+
+    Route::post('register', [AccountController::class, 'add']);
+
+    Route::get('login', [AccountController::class, 'login']);
+});
+
+Route::prefix('users/{user_id}')->group(function () {
+    Route::prefix('recipies', function () {
+        Route::get('/', [RecipieController::class, 'list']);
+    });
+
+
 });
 
 Route::get('/', function (Request $request) {

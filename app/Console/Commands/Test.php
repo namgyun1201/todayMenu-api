@@ -35,6 +35,7 @@ class Test extends Command
      */
     public function handle()
     {
+        dd(config('aborts.accounts.does_not_exist'));
         // $data = Excel::toCollection(new RecipieImport(), storage_path('app/public/레시피 정보/레시피 기본정보.xlsx'));
         // dd($data[0]);
 
@@ -49,7 +50,6 @@ class Test extends Command
         $data = Excel::import(new ProcessImport(), storage_path('app/public/레시피 정보/레시피 과정.xlsx'));
         dd($data);
 
-        dd($excel);
 
     }
 }
