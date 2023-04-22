@@ -10,6 +10,19 @@ return new class () extends Migration {
      */
     public function up(): void
     {
+        Schema::create('users', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 100)->nullable()->comment('성+이름');
+            $table->string('account')->comment('로그인 계정');
+            $table->string('email', 100)->comment('이메일 주소');
+            $table->string('password')->nullable()->comment('비밀번호');
+            $table->json('mobile')->nullable()->comment('핸드폰번호');
+            $table->timestampsTz($precision = 3);
+            $table->softDeletesTz($column = 'deleted_at', $precision = 3);
+
+            $table->index('id');
+        });
+
         # 재료
         Schema::create('ingredients', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -66,6 +79,7 @@ return new class () extends Migration {
      */
     public function down(): void
     {
+        Schema::dropIfExists('users');
         Schema::dropIfExists('ingredients');
         Schema::dropIfExists('recipies');
         Schema::dropIfExists('processes');
