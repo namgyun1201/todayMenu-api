@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Excel::import(new RecipieImport(), storage_path('app/public/레시피 정보/레시피.xlsx'));
-        Excel::import(new IngredientImport(), storage_path('app/public/레시피 정보/레시피 재료.xlsx'));
-        Excel::import(new ProcessImport(), storage_path('app/public/레시피 정보/레시피 과정.xlsx'));
+        Excel::import(new RecipieImport(), storage_path('app/public/recipie_excel/recipie.xlsx'));
+        Excel::import(new IngredientImport(), storage_path('app/public/recipie_excel/ingredient.xlsx'));
+        Excel::import(new ProcessImport(), storage_path('app/public/recipie_excel/process.xlsx'));
     }
 }
