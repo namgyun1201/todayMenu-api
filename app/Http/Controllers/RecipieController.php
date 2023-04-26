@@ -7,10 +7,20 @@ use App\Models\Recipie;
 
 class RecipieController extends Controller
 {
-    public function list(Request $request, $user_id)
+    public function list(Request $request)
     {
         $this->validate($request, [
-            'limit' => 'nullable|'
+                'limit' => 'nullable|integer'
+        ], [
+            '*' => config('aborts.request')
+        ]);
+
+        $limit = $request->input('limit');
+
+        $recipies = Recipie::inRandomOrder()->take($limit)->get();
+
+        return response()->json([
+            'data' => $recipies
         ]);
     }
 }
