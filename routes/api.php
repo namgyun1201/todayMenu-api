@@ -22,13 +22,19 @@ Route::prefix('account')->group(function () {
 
     Route::post('register', [AccountController::class, 'add']);
 
-    Route::get('login', [AccountController::class, 'login']);
+    Route::post('login', [AccountController::class, 'login']);
+
+    Route::post('refreshToken', [AccountController::class, 'refreshToken']);
+
 });
 
-Route::prefix('users/{user_id}')->group(function () {
-    Route::prefix('recipies', function () {
+Route::middleware('auth:api')->group(function () {
+    Route::prefix('recipies')->group(function () {
         Route::get('/', [RecipieController::class, 'list']);
     });
+});
+Route::prefix('users/{user_id}')->group(function () {
+
 
 
 });

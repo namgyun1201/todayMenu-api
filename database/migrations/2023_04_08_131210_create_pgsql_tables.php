@@ -14,7 +14,7 @@ return new class () extends Migration {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 100)->comment('성+이름');
-            $table->string('account')->comment('로그인 계정');
+            // $table->string('account')->comment('로그인 계정');
             $table->string('email', 100)->comment('이메일 주소');
             $table->string('password')->comment('비밀번호');
             $table->string('mobile')->nullable()->comment('핸드폰번호');
@@ -22,7 +22,7 @@ return new class () extends Migration {
             $table->softDeletesTz($column = 'deleted_at', $precision = 3);
 
             $table->index('id');
-            $table->index('account');
+            // $table->index('account');
         });
 
         # 재료
