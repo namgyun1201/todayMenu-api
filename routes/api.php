@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\RecipieController;
+use App\Http\Controllers\IngredientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,13 @@ Route::prefix('account')->group(function () {
 
 Route::middleware('auth:api')->group(function () {
     Route::prefix('recipies')->group(function () {
-        Route::get('/', [RecipieController::class, 'list']);
+        Route::get('recommend', [RecipieController::class, 'recommendList']);
+
+        Route::get('{recipie_id}', [RecipieController::class, 'show']);
+    });
+
+    Route::prefix('ingredients')->group(function () {
+        Route::get('/', [IngredientController::class, 'list']);
     });
 });
 Route::prefix('users/{user_id}')->group(function () {
