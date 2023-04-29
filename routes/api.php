@@ -34,6 +34,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('recommend', [RecipieController::class, 'recommendList']);
 
         Route::get('{recipie_id}', [RecipieController::class, 'show']);
+
+        Route::get('/', [RecipieController::class, 'list']);
     });
 
     Route::prefix('ingredients')->group(function () {

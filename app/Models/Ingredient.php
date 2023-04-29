@@ -25,4 +25,9 @@ class Ingredient extends Model
         $this->type_code = isset($attributes['type_code']) ? $attributes['type_code'] : null;
         $this->type = isset($attributes['type']) ? $attributes['type'] : null;
     }
+
+    public function recipie()
+    {
+        return $this->belongsTo(Recipie::class);
+    }
 }

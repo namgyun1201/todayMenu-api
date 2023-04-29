@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Recipie;
+use App\Models\Ingredient;
 
 class RecipieController extends Controller
 {
@@ -35,6 +36,28 @@ class RecipieController extends Controller
 
         return response()->json([
             'data' => $recipie
+        ]);
+    }
+
+    public function list(Request $request)
+    {
+        $this->validate($request, [
+            'ingredient' => 'required|string'
+        ], [
+            '*' => config('aborts.request')
+        ]);
+
+        $ingredient = $request->input('ingredient');
+
+        $ingredients = Ingredient::with('recipie')->where('name', $ingredient)->get();
+        if ($ingredients->isEmpty()) {
+            abort(403, config('aborts.ingredients.does_not_exist'));
+        }
+
+        $recipies = $ingredients->pluck('recipie');
+
+        return response()->json([
+            'data' => $recipies
         ]);
     }
 }
