@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\RecipieController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\ProcessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,10 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('ingredients')->group(function () {
         Route::get('/', [IngredientController::class, 'list']);
+    });
+
+    Route::prefix('processes')->group(function () {
+        Route::get('{recipie_id}', [ProcessController::class, 'show']);
     });
 });
 Route::prefix('users/{user_id}')->group(function () {
