@@ -42,19 +42,24 @@ class RecipieController extends Controller
     public function list(Request $request)
     {
         $this->validate($request, [
-            'ingredient' => 'required|string'
+            'ingredients' => 'required|array'
         ], [
             '*' => config('aborts.request')
         ]);
 
-        $ingredient = $request->input('ingredient');
+        $ingredients = $request->input('ingredients');
 
-        $ingredients = Ingredient::with('recipie')->where('name', $ingredient)->get();
-        if ($ingredients->isEmpty()) {
-            abort(403, config('aborts.ingredients.does_not_exist'));
+        $intersection = Ingredient::with('recipie')->select('recipie_id')->whereIn('name', $ingredients)->groupBy('recipie_id')->havingRaw('COUNT(DISTINCT name) = ?', [count($ingredients)])->get();
+
+        $intersectionRecipies = collect();
+        if ($intersection->isNotEmpty()) {
+            $intersectionRecipies = $intersection->pluck('recipie');
         }
 
-        $recipies = $ingredients->pluck('recipie');
+        $combination = Ingredient::with('recipie')->select('recipie_id')->whereIn('name', $ingredients)->groupBy('recipie_id')->get();
+        $combinationRecipies = $combination->pluck('recipie');
+
+        $recipies = $intersectionRecipies->merge($combinationRecipies)->unique()->values();
 
         return response()->json([
             'data' => $recipies
