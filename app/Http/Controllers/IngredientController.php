@@ -34,7 +34,7 @@ class IngredientController extends Controller
         ->get();
 
         if ($only_name === true) {
-            $ingredients = $ingredients->pluck('name');
+            $ingredients = $ingredients->pluck('name')->unique()->values();
         }
 
         return response()->json([
