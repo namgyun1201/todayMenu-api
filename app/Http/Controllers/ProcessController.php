@@ -9,9 +9,12 @@ class ProcessController extends Controller
 {
     public function show(Request $request, $recipie_id)
     {
-        $recipie_id = intval($request->input('recipie_id'));
+        $recipie_id = intval($recipie_id);
 
         $processes = Process::where('recipie_id', $recipie_id)->orderBy('position')->get();
+        if ($processes->isEmpty()) {
+            abort(403, config('aborts.processes.does_not_exist'));
+        }
 
         return response()->json([
             'data' => $processes

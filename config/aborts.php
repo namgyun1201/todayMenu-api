@@ -12,5 +12,9 @@ return [
     'ingredients' => [
         'does_not_exist' => '해당하는 재료가 없습니다.'
 
+    ],
+    'processes' => [
+        'does_not_exist' => '해당하는 과정이 없습니다.'
+
     ]
 ];
