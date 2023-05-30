@@ -41,6 +41,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('ingredients')->group(function () {
         Route::get('/', [IngredientController::class, 'list']);
+
+        Route::get('{recipie_id}', [IngredientController::class, 'show']);
+
     });
 
     Route::prefix('processes')->group(function () {

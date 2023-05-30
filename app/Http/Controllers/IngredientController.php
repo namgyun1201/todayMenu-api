@@ -41,4 +41,18 @@ class IngredientController extends Controller
             'data' => $ingredients
         ]);
     }
+
+    public function show(Request $request, $recipie_id)
+    {
+        $recipie_id = intval($recipie_id);
+
+        $ingredients = Ingredient::where('recipie_id', $recipie_id)->get();
+        if ($ingredients->isEmpty()) {
+            abort(403, config('aborts.ingredients.does_not_exist'));
+        }
+
+        return response()->json([
+            'data' => $ingredients
+        ]);
+    }
 }
