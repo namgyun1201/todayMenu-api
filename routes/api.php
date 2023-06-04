@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\RecipieController;
@@ -48,6 +49,10 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('processes')->group(function () {
         Route::get('{recipie_id}', [ProcessController::class, 'show']);
+    });
+
+    Route::get('user', function (Request $request) {
+        return Auth::user();
     });
 });
 Route::prefix('users/{user_id}')->group(function () {
